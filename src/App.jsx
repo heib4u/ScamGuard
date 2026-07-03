@@ -191,14 +191,12 @@ export default function ScamGuard() {
     setError(null);
     setResult(null);
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 1000,
-          system: buildSystemPrompt(lang),
-          messages: [{ role: "user", content: text }]
+          message: text,
+          systemPrompt: buildSystemPrompt(lang),
         })
       });
       if (!response.ok) throw new Error("request-failed");
